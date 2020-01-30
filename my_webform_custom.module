@@ -1,0 +1,65 @@
+<?php
+/**
+ * @file
+ * Contains my_webform_custom.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+
+
+function my_webform_custom_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.my_webform_custom':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Webform custom Module for ') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+
+
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+
+function my_webform_custom_form_alter(&$form,$form_state, $form_id) {
+
+
+  $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+  $name = $user->get('name')->value;
+  //$roles = $user->getRoles();
+
+
+  /**
+   * (IN ADD submission Form) Here You must change the webform name 'WEBFORM_MACHINE_NAME'.
+   */
+  if ($form_id == 'webform_submission_WEBFORM_MACHINE_NAME_add_form' && $name == 'admin') {
+    // Also change the 'FIELD_MACHINE_NAME'.
+    $form ['elements']['FIELD_MACHINE_NAME']['#attributes']['disabled'] ='disabled';
+  }
+
+
+  /**
+   * (IN EDIT submission Form) Here You must change the webform name 'WEBFORM_MACHINE_NAME'.
+   */
+  if ($form_id == 'webform_submission_WEBFORM_MACHINE_NAME_edit_form' && $name == 'admin') {
+    // Also change the 'FIELD_MACHINE_NAME'.
+    $form ['elements']['FIELD_MACHINE_NAME']['#attributes']['disabled'] ='disabled';
+  }
+
+
+
+
+}
+
+
+
+

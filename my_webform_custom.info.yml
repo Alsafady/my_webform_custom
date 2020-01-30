@@ -1,0 +1,5 @@
+name: My Webform Custom Module
+type: module
+description: Webform Custom Module
+core: 8.x
+package: Custom
